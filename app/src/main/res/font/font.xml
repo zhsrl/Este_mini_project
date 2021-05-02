@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <font
+        android:font="@font/eucreg"
+        android:fontStyle="normal"
+        />
+
+    <font
+        android:font="@font/eucl"
+        android:fontStyle="normal"/>
+
+    <font
+        android:font="@font/eucexl"
+        android:fontStyle="normal"/>
+
+    <font
+        android:font="@font/eucmed"
+        android:fontStyle="normal"/>
+
+    <font
+        android:font="@font/eucbold"
+        android:fontStyle="normal"/>
+</font-family>
