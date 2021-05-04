@@ -1,11 +1,14 @@
 package com.e.este
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavBar: BottomNavigationView
@@ -26,17 +29,17 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavBar = findViewById(R.id.BNV_activity_main)
 
-        bottomNavBar.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener{
+        bottomNavBar.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 var selectedFragment: Fragment? = null
 
-                when(item.itemId){
-                    R.id.item_today ->{
+                when (item.itemId) {
+                    R.id.item_today -> {
                         selectedFragment = TodayFragment()
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, selectedFragment)
-                            .addToBackStack(null)
-                            .commit()
+                                .replace(R.id.fragment_container, selectedFragment)
+                                .addToBackStack(null)
+                                .commit()
                         item.setChecked(true)
 
                         return true
@@ -44,9 +47,9 @@ class MainActivity : AppCompatActivity() {
                     R.id.item_all_shedule -> {
                         selectedFragment = AllSheduleFragment()
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, selectedFragment)
-                            .addToBackStack(null)
-                            .commit()
+                                .replace(R.id.fragment_container, selectedFragment)
+                                .addToBackStack(null)
+                                .commit()
                         item.setChecked(true)
 
                         return true
@@ -57,4 +60,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+
 }

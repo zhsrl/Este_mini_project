@@ -9,12 +9,13 @@
     android:paddingBottom="10dp"
     >
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="370dp"
         android:layout_height="65dp"
-        android:elevation="1dp"
         android:padding="5dp"
-        android:background="@drawable/today_task_background"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="15dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 

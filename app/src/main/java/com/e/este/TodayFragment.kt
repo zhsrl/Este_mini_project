@@ -1,11 +1,13 @@
 package com.e.este
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -14,6 +16,7 @@ class TodayFragment : Fragment() {
 
     private lateinit var todayTaskListAdapter: TodayTaskListAdapter
     private lateinit var recyclerView: RecyclerView
+    private var taskList: MutableList<TodayTask> = ArrayList()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -27,13 +30,40 @@ class TodayFragment : Fragment() {
 
         recyclerView = view!!.findViewById(R.id.RV_today_task_list)
 
-        todayTaskListAdapter = TodayTaskListAdapter(taskGenerator())
+        taskList = taskGenerator() as MutableList<TodayTask>
+
+        todayTaskListAdapter = TodayTaskListAdapter(taskList)
         recyclerView.adapter = todayTaskListAdapter
         todayTaskListAdapter.notifyDataSetChanged()
 
         val layoutManager = LinearLayoutManager(context!!.applicationContext)
         recyclerView.layoutManager = layoutManager
         layoutManager.orientation = LinearLayoutManager.VERTICAL
+
+
+        // Swipe Delete Item Recycler View
+        val itemTouchSimpleCallback: SimpleCallback = object : ItemTouchHelper.SimpleCallback(
+                0, ItemTouchHelper.RIGHT
+        ){
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                Toast.makeText(context, "action Move", Toast.LENGTH_SHORT).show()
+
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Toast.makeText(context, "action Swipe", Toast.LENGTH_SHORT).show()
+
+                val taskPosition: Int = viewHolder.adapterPosition
+                taskList.removeAt(taskPosition)
+                todayTaskListAdapter.notifyDataSetChanged()
+
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchSimpleCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     fun taskGenerator(): List<TodayTask> {
