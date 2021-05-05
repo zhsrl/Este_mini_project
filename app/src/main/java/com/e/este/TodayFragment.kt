@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -20,6 +21,10 @@ class TodayFragment : Fragment() {
     private lateinit var todayTaskListAdapter: TodayTaskListAdapter
     private lateinit var recyclerView: RecyclerView
     private var taskList: MutableList<TodayTask> = ArrayList()
+
+    private lateinit var addTaskFAB: FloatingActionButton
+
+    val addTaskFragment = AddTaskForTodayFragment()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -112,6 +117,12 @@ class TodayFragment : Fragment() {
 
         val itemTouchHelper2 = ItemTouchHelper(itemTouchSimpleCallbackForDoneTask)
         itemTouchHelper2.attachToRecyclerView(recyclerView)
+
+        addTaskFAB = view!!.findViewById(R.id.FAB_add_task)
+
+        addTaskFAB.setOnClickListener {
+            fragmentManager?.let { it1 -> addTaskFragment.show(it1, "ADD_TASK") }
+        }
     }
 
 
