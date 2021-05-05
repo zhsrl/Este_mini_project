@@ -1,3 +1,4 @@
+
 package com.e.este
 
 import android.os.Bundle
@@ -5,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 
 
 class TodayFragment : Fragment() {
@@ -28,6 +31,9 @@ class TodayFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        val contextView = view!!.findViewById<ConstraintLayout>(R.id.fragmentTodayContentView)
+
+        // Recycler View Options
         recyclerView = view!!.findViewById(R.id.RV_today_task_list)
 
         taskList = taskGenerator() as MutableList<TodayTask>
@@ -41,8 +47,10 @@ class TodayFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
 
 
+
+
         // Swipe Delete Item Recycler View
-        val itemTouchSimpleCallback: SimpleCallback = object : ItemTouchHelper.SimpleCallback(
+        val itemTouchSimpleCallbackForDeleteTask: SimpleCallback = object : ItemTouchHelper.SimpleCallback(
                 0, ItemTouchHelper.RIGHT
         ){
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
@@ -52,20 +60,62 @@ class TodayFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                Toast.makeText(context, "action Swipe", Toast.LENGTH_SHORT).show()
-
                 val taskPosition: Int = viewHolder.adapterPosition
+
+                val tmp = taskList[taskPosition]
+
                 taskList.removeAt(taskPosition)
                 todayTaskListAdapter.notifyDataSetChanged()
+
+                Snackbar.make(contextView, "Task Removed", Snackbar.LENGTH_LONG)
+                        .setAction("Cancel"){
+                            taskList.add(taskPosition, tmp)
+                            todayTaskListAdapter.notifyDataSetChanged()
+                        }
+                        .show()
 
             }
 
         }
 
-        val itemTouchHelper = ItemTouchHelper(itemTouchSimpleCallback)
+
+        // Swipe for Done Task
+        val itemTouchSimpleCallbackForDoneTask: SimpleCallback = object : ItemTouchHelper.SimpleCallback(
+                0, ItemTouchHelper.LEFT
+        ){
+
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val taskPosition: Int = viewHolder.adapterPosition
+
+                val tmp = taskList[taskPosition]
+
+                taskList.removeAt(taskPosition)
+                todayTaskListAdapter.notifyDataSetChanged()
+
+                Snackbar.make(contextView, "Task Done!", Snackbar.LENGTH_LONG)
+                        .setAction("Cancel"){
+                            taskList.add(taskPosition, tmp)
+                            todayTaskListAdapter.notifyDataSetChanged()
+                        }
+                        .show()
+
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchSimpleCallbackForDeleteTask)
         itemTouchHelper.attachToRecyclerView(recyclerView)
+
+        val itemTouchHelper2 = ItemTouchHelper(itemTouchSimpleCallbackForDoneTask)
+        itemTouchHelper2.attachToRecyclerView(recyclerView)
     }
 
+
+    // Generated test tasks
     fun taskGenerator(): List<TodayTask> {
 
         val list: MutableList<TodayTask> = ArrayList()
