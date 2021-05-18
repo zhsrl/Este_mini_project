@@ -39,7 +39,7 @@
         android:textAllCaps="false"
         android:fontFamily="@font/eucreg"
         android:textSize="18sp"
-        android:backgroundTint="#6A7BD9"
+        android:backgroundTint="@color/main"
         />
 
 

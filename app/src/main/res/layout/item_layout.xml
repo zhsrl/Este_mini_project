@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <TextView
+        android:id="@+id/TV_shedule_title"
+        android:text="Shedule"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/eucmed"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical|start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/IV_show_all_tasks"
+        android:layout_width="16dp"
+        android:layout_height="8dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/ic_show_shedule"
+        />
+
+</RelativeLayout>

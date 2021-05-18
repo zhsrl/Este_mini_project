@@ -27,6 +27,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:buttonTint="@color/main"
+            android:gravity="center_vertical"
+            />
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
